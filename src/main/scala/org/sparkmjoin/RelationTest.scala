@@ -41,12 +41,13 @@ object RelationTest {
         ,("spark.sql.IteratedHashJoin", "true")
       )
 
+      val sc = new SparkContext(new SparkConf().setAppName("RelationTest"))
 
-      val conf = new SparkConf().setMaster("spark://alex-HP:7077")
-        .setAppName("TestMaster").set("spark.driver.memory","512m")
-        .set("spark.executor.memory","512m")
+   //   val conf = new SparkConf().setMaster("spark://alex-HP:7077")
+     //   .setAppName("TestMaster").set("spark.driver.memory","512m")
+       // .set("spark.executor.memory","512m")
         //.set("spark.default.parallelism","1")
-      val sc = SparkContext.getOrCreate(conf)
+      //val sc = SparkContext.getOrCreate(conf)
 
       val sqlContext = new SQLContext(sc)
 
