@@ -1,0 +1,6 @@
+{	"parent_file": "/home/alex/sparkmjoin/data/Myfile.pf",
+	"chunk_id": "0002",
+	"chunk_size": 100000,
+	"num_records": 50,
+	"data_location": "/home/alex/sparkmjoin/data/C2.csv"
+}
