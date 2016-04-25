@@ -16,6 +16,7 @@ object RelationTest {
   def main(args: Array[String]) {
 
     dataPath=args(0);
+    val data_size = args(1)
     val t1  = new MyThread
     //al t2  = new SparkMaster
     try {
@@ -77,15 +78,15 @@ object RelationTest {
       val dfC = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/C400m.pf")
+        .load(dataPath+"/C"+data_size+".pf")
       val dfD = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/D400m.pf")
+        .load(dataPath+"/D"+data_size+".pf")
       val dfE = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/E400m.pf")
+        .load(dataPath+"/E"+data_size+".pf")
 
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
