@@ -1,6 +1,6 @@
-{	"parent_file": "/home/alex/sparkmjoin/data/Myfile.pf",
+{	"parent_file": "/home_local/rivas/sparkmjoin/data/Myfile.pf",
 	"chunk_id": "0001",
 	"chunk_size": 100000,
 	"num_records": 50,
-	"data_location": "/home/alex/sparkmjoin/data/C3.csv"
+	"data_location": "/home_local/rivas/sparkmjoin/data/C3.csv"
 }

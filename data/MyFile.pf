@@ -2,10 +2,10 @@
 	"file_size": 200000,
 	"num_records": 100,
 	"chunk_locations": [
-        { "id": "0001", "holder_location": "/home/alex/sparkmjoin/data/0001.json" },
-        { "id": "0002", "holder_location": "/home/alex/sparkmjoin/data/0002.json" }
+        { "id": "0001", "holder_location": "/home_local/rivas/sparkmjoin/data/0001.json" },
+        { "id": "0002", "holder_location": "/home_local/rivas/sparkmjoin/data/0002.json" }
 	],
-	"schema_location": "/home/alex/sparkmjoin/data/MyFile.ddl"
+	"schema_location": "/home_local/rivas/sparkmjoin/data/MyFile.ddl"
 }
 
 

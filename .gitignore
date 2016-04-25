@@ -14,7 +14,14 @@ cache
 .generated-mima*
 work/
 out/
+
+# Alex
+src/main/scala/org/sparkmjoin/RelationTest.scala
+data/*
 .idea/*
+data/*.json
+data/*.pf
+
 .DS_Store
 third_party/libmesos.so
 third_party/libmesos.dylib

@@ -20,9 +20,9 @@ object RelationTest {
     val t2  = new SparkMaster
     try {
       val server = (new Thread(t1))
-//      val spark_master = (new Thread(t2))
-  //    spark_master.setDaemon(false)
-   //   spark_master.start
+      val spark_master = (new Thread(t2))
+      spark_master.setDaemon(false)
+      spark_master.start
       server.setDaemon(false)
       server.start
 
@@ -41,10 +41,19 @@ object RelationTest {
         ,("spark.sql.IteratedHashJoin", "true")
       )
 
-      val sc = new SparkContext(new SparkConf().setAppName("RelationTest"))
 
-   //   val conf = new SparkConf().setMaster("spark://alex-HP:7077")
-     //   .setAppName("TestMaster").set("spark.driver.memory","512m")
+
+     // val conf = new SparkConf().setMaster("spark://alex-HP:7077")
+        // val conf = new SparkConf().setMaster("local[*]")
+        //.        setSparkHome("/home/alex/spark1").
+        //  set("spark.default.parallelism","2").
+        //set("spark.cores.max","4").
+        //      set("spark.executor.instances", "3")
+    //    .setAppName("TestMaster")
+
+      val sc = t2.sc
+
+      //   .setAppName("TestMaster").set("spark.driver.memory","512m")
        // .set("spark.executor.memory","512m")
         //.set("spark.default.parallelism","1")
       //val sc = SparkContext.getOrCreate(conf)
@@ -69,15 +78,13 @@ object RelationTest {
         .option("header", "false")
         .load(dataPath+"/MyFile.pf")
       val dfD = sqlContext.read
-        .format("csv")
-        .option("header", "true")
-        .option("inferSchema", "true")
-        .load(dataPath+"/D.csv")
+        .format("pf")
+        .option("header", "false")
+        .load(dataPath+"/MyFile1.pf")
       val dfE = sqlContext.read
-        .format("csv")
-        .option("header", "true")
-        .option("inferSchema", "true")
-        .load(dataPath+"/E.csv")
+        .format("pf")
+        .option("header", "false")
+        .load(dataPath+"/MyFile2.pf")
 
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
@@ -126,19 +133,26 @@ class SparkMaster extends Runnable {
 
   var stop : Boolean = false
   var started : Boolean = false
-  var sc : SparkContext  = null
+  var sc : SparkContext  = init
 
+
+  def init : SparkContext = {
+    val conf = new SparkConf().setMaster("local[4]")
+      // val conf = new SparkConf().setMaster("local[*]")
+      //.        setSparkHome("/home/alex/spark1").
+      //  set("spark.default.parallelism","2").
+      //set("spark.cores.max","4").
+      //      set("spark.executor.instances", "3")
+      .setAppName("TestMaster")
+
+    SparkContext.getOrCreate(conf)
+
+
+  }
   def run {
     import sys.process._
 
-      val conf = new SparkConf().setMaster("spark://alex-HP:7077")
-        //.        setSparkHome("/home/alex/spark1").
-      //  set("spark.default.parallelism","2").
-        //set("spark.cores.max","4").
-  //      set("spark.executor.instances", "3")
-        .setAppName("TestMaster")
 
-        sc = SparkContext.getOrCreate(conf)
 
 
     println(sc.master)
