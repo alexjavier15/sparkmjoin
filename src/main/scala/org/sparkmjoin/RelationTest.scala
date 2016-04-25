@@ -17,12 +17,12 @@ object RelationTest {
 
     dataPath=args(0);
     val t1  = new MyThread
-    val t2  = new SparkMaster
+    //al t2  = new SparkMaster
     try {
       val server = (new Thread(t1))
-      val spark_master = (new Thread(t2))
-      spark_master.setDaemon(false)
-      spark_master.start
+     // val spark_master = (new Thread(t2))
+      //spark_master.setDaemon(false)
+      //spark_master.start
       server.setDaemon(false)
       server.start
 
@@ -43,20 +43,21 @@ object RelationTest {
 
 
 
-     // val conf = new SparkConf().setMaster("spark://alex-HP:7077")
+     val conf = new SparkConf()
+        //.setMaster("spark://alex-HP:7077")
         // val conf = new SparkConf().setMaster("local[*]")
         //.        setSparkHome("/home/alex/spark1").
         //  set("spark.default.parallelism","2").
         //set("spark.cores.max","4").
         //      set("spark.executor.instances", "3")
-    //    .setAppName("TestMaster")
+        .setAppName("TestMaster")
 
-      val sc = t2.sc
+    //  val sc = t2.sc
 
       //   .setAppName("TestMaster").set("spark.driver.memory","512m")
        // .set("spark.executor.memory","512m")
         //.set("spark.default.parallelism","1")
-      //val sc = SparkContext.getOrCreate(conf)
+      val sc = SparkContext.getOrCreate(conf)
 
       val sqlContext = new SQLContext(sc)
 
@@ -71,31 +72,36 @@ object RelationTest {
 
       // Importing the SQL context gives access to all the SQL functions and implicit conversions.
       import sqlContext.implicits._
-
+      val  start = System.currentTimeMillis()
       // val df = sc.parallelize((1 to 100).map(i => Record(i, s"val_$i"))).toDF()
       val dfC = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/MyFile.pf")
+        .load(dataPath+"/C400m.pf")
       val dfD = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/MyFile1.pf")
+        .load(dataPath+"/D400m.pf")
       val dfE = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/MyFile2.pf")
+        .load(dataPath+"/E400m.pf")
 
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      sqlContext.sql("SELECT count(*) FROM C,E,D WHERE C1 = D1 AND D1 = E1").show}
+      sqlContext.sql("SELECT count(*) FROM C,E,D WHERE C1 = D1 AND D1 = E1").show
+
+      val end = System.currentTimeMillis()
+      val duration = end-start
+      println("*************3Duration : "+ duration +"**************")
+    }
     catch {
       case e : Exception =>
           e.printStackTrace(System.err)
     }
     finally {
-      t1.stop = true
+   //   t1.stop = true
     }
 
 
