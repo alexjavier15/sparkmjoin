@@ -15,7 +15,7 @@ char cwd[1024];
 //char data_path[]="/home/renata/data";
 
 //cloud 20
-char data_path[]="/home_local/rivas/sparkmjoin/data";
+char data_path[]="/home/alex/sparkmjoin/data";
 
 char getRandomChar();
 char* getRandomString(int size);

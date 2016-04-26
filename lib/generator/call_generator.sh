@@ -4,7 +4,7 @@ echo "$@"; # - this prints actual parameters
 
 
 #cloud20
-DATA_FOLDER="/home_local/rivas/sparkmjoin/data"
+DATA_FOLDER="/home/alex/sparkmjoin/data"
 FILE_FORMAT="csv"
 REL_FORMAT="pf"
 NUM_CHUNKS=$1
@@ -20,10 +20,10 @@ FILE_PATH="$DATA_FOLDER/$TABLE_NAME"
 DDL_FILE="$FILE_PATH.ddl"
 REL_FILE="$FILE_PATH.$REL_FORMAT"
 #TODO recompile the generator
-ORIGINAL_PATH="/home_local/rivas/experiments/data.txt"
+ORIGINAL_PATH="/home/alex/sparkmjoin/data/data.txt"
 
 #cloud 20
-EXEC_PATH="/home_local/rivas/sparkmjoin/lib/generator"
+EXEC_PATH="/home/alex/sparkmjoin/lib/generator"
 
 #name of the executable
 GENERATOR="generator.exe"

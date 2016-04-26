@@ -18,6 +18,7 @@ object RelationTest {
     dataPath=args(0);
     val data_size = args(1)
     val mjoin = args(2)
+    val sampling = args(3)
     val t1  = new MyThread
     //al t2  = new SparkMaster
     try {
@@ -38,9 +39,10 @@ object RelationTest {
         ("spark.sql.codegen", "false"),
         ("spark.sql.codegen.WholeStage", "false"),
         ("spark.sql.mjoin", mjoin),
-        ("spark.sql.join.preferSortMergeJoin", "false")
-        ,  ("spark.sql.autoBroadcastJoinThreshold", "1")
-        ,("spark.sql.IteratedHashJoin", "true")
+        ("spark.sql.mjoin.sampling",sampling),
+        ("spark.sql.join.preferSortMergeJoin", "false"),
+        ("spark.sql.autoBroadcastJoinThreshold", "1"),
+        ("spark.sql.IteratedHashJoin", "false")
       )
 
 
