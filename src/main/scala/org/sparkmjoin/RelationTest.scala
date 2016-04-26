@@ -94,7 +94,7 @@ object RelationTest {
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      sqlContext.sql("SELECT count(*) FROM C,E,D WHERE C1 = D1 AND D1 = E1").show
+      sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C1 = D1 AND D1 = E1").show
 
       val end = System.currentTimeMillis()
       val duration = end-start
