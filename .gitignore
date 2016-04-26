@@ -21,6 +21,7 @@ data/*
 .idea/*
 data/*.json
 data/*.pf
+lib/generator/*
 
 .DS_Store
 third_party/libmesos.so
