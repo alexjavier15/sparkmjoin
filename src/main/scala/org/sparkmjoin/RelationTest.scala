@@ -16,9 +16,11 @@ object RelationTest {
   def main(args: Array[String]) {
 
     dataPath=args(0);
-    val data_size = args(1)
-    val mjoin = args(2)
-    val sampling = args(3)
+    val data_size1 = args(1)
+    val data_size2 = args(2)
+    val data_size3 = args(3)
+    val mjoin = args(4)
+    val sampling = args(5)
     val t1  = new MyThread
     //al t2  = new SparkMaster
     try {
@@ -81,20 +83,20 @@ object RelationTest {
       val dfC = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/C"+data_size+".pf")
+        .load(dataPath+"/C"+data_size1+".pf")
       val dfD = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/D"+data_size+".pf")
+        .load(dataPath+"/D"+data_size2+".pf")
       val dfE = sqlContext.read
         .format("pf")
         .option("header", "false")
-        .load(dataPath+"/E"+data_size+".pf")
+        .load(dataPath+"/E"+data_size3+".pf")
 
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      sqlContext.sql("SELECT count(*) FROM C,D,E WHERE C.id = D1 AND D1 = E1").show
+      sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C.id = D1 AND D1 = E1").show
 
       val end = System.currentTimeMillis()
       val duration = end-start
