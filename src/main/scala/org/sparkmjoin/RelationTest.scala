@@ -98,12 +98,20 @@ object RelationTest {
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      sqlContext.sql("SELECT * FROM E,D,C WHERE C.id = D1 AND D1 = E1").rdd.saveAsTextFile("tmp.txt")
+      val iter = sqlContext.sql("SELECT * FROM E,D,C WHERE C.id = D1 AND D1 = E1").rdd.toLocalIterator
+      var rows = 0
+      while (iter.hasNext){
+        rows+=1
+        iter.next()
+
+      }
+
 
 
       val end = System.currentTimeMillis()
       val duration = end-start
       println("*************Duration : "+ duration +"**************")
+      println("*************Rows : "+ rows +"**************")
     }
     catch {
       case e : Exception =>
