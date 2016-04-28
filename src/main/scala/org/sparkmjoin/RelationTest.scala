@@ -44,7 +44,7 @@ object RelationTest {
         ("spark.sql.mjoin.sampling",sampling),
         ("spark.sql.join.preferSortMergeJoin", "false"),
         ("spark.sql.autoBroadcastJoinThreshold", "1"),
-        ("spark.sql.IteratedHashJoin", "false")
+        ("spark.sql.IteratedHashJoin", "true")
       )
 
 
