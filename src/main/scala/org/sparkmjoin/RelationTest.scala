@@ -8,6 +8,7 @@ import org.apache.spark.sql.SQLContext
 
 import scala.collection.mutable
 import scala.io.BufferedSource
+import scala.reflect.io.File
 
 
 
@@ -74,7 +75,8 @@ object RelationTest {
       sqlContext.setConf(conf._1,conf._2)
 
       )
-
+      if(File("tmp.txt").exists)
+        File("tmp.txt").delete()
 
       // Importing the SQL context gives access to all the SQL functions and implicit conversions.
       import sqlContext.implicits._
@@ -96,11 +98,12 @@ object RelationTest {
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C.id = D1 AND D1 = E1").show
+      sqlContext.sql("SELECT * FROM E,D,C WHERE C.id = D1 AND D1 = E1").rdd.saveAsTextFile("tmp.txt")
+
 
       val end = System.currentTimeMillis()
       val duration = end-start
-      println("*************3Duration : "+ duration +"**************")
+      println("*************Duration : "+ duration +"**************")
     }
     catch {
       case e : Exception =>
