@@ -22,7 +22,7 @@ object RelationTest {
     val data_size3 = args(3)
     val mjoin = args(4)
     val sampling = args(5)
-    val numPart = args(6)
+    val numPart = args(6).toLong
     val t1  = new MyThread
     //al t2  = new SparkMaster
     try {
@@ -53,7 +53,7 @@ object RelationTest {
       )
       val confsLong  : Map[String,Long] = Map(
         ("spark.sql.files.maxPartitionBytes",512*1024*1024L),
-        ("spark.sql.shuffle.partitions",numPart.asInstanceOf[Long])
+        ("spark.sql.shuffle.partitions",numPart)
       )
 
 
