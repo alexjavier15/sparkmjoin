@@ -65,7 +65,7 @@ object RelationTest {
 
       val sqlContext = new SQLContext(sc)
       sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 512*1024*1024)
-
+      sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
 
 
 
