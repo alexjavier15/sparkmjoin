@@ -75,7 +75,7 @@ object RelationTest {
 
       )
       confsLong.foreach( conf =>
-        sqlContext.getConf(conf._1,conf._2.toString)
+        sqlContext.setConf(conf._1,conf._2.toString)
 
       )
 
