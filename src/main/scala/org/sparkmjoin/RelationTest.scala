@@ -22,6 +22,7 @@ object RelationTest {
     val data_size3 = args(3)
     val mjoin = args(4)
     val sampling = args(5)
+    val numPart = args(6)
     val t1  = new MyThread
     //al t2  = new SparkMaster
     try {
@@ -37,7 +38,7 @@ object RelationTest {
 
 
 
-      val confs = Map(
+      val confs : Map[String,String] = Map(
         ("spark.sql.codegen.wholeStageEnabled", "false"),
         ("spark.sql.codegen", "false"),
         ("spark.sql.codegen.WholeStage", "false"),
@@ -45,6 +46,8 @@ object RelationTest {
         ("spark.sql.mjoin.sampling",sampling),
         ("spark.sql.join.preferSortMergeJoin", "false"),
         ("spark.sql.autoBroadcastJoinThreshold", "1"),
+        ("spark.sql.shuffle.partitions",numPart),
+        //("spark.sql.adaptive.shuffle.targetPostShuffleInputSize",(1024*1024*1024L).toString),
         ("spark.sql.IteratedHashJoin", "true")
       )
 
@@ -75,6 +78,9 @@ object RelationTest {
       sqlContext.setConf(conf._1,conf._2)
 
       )
+      sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 1024*1024*1024)
+      sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
+      sqlContext.sparkContext.hadoopConfiguration.setInt("fs.inmemory.size.mb", 1024)
       if(File("tmp.txt").exists)
         File("tmp.txt").delete()
 
@@ -98,20 +104,13 @@ object RelationTest {
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      val iter = sqlContext.sql("SELECT * FROM E,D,C WHERE C.id = D1 AND D1 = E1").rdd.toLocalIterator
-      var rows = 0
-      while (iter.hasNext){
-        rows+=1
-        iter.next()
-
-      }
+      val iter = sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C.id = D1 AND D1 = E1").show()
 
 
 
       val end = System.currentTimeMillis()
       val duration = end-start
       println("*************Duration : "+ duration +"**************")
-      println("*************Rows : "+ rows +"**************")
     }
     catch {
       case e : Exception =>

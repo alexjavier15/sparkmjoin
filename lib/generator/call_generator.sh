@@ -4,12 +4,15 @@ echo "$@"; # - this prints actual parameters
 
 
 #cloud20
-DATA_FOLDER="/home/alex/sparkmjoin/data"
+DATA_FOLDER="/home_local/rivas/sparkmjoin/data"
 FILE_FORMAT="csv"
 REL_FORMAT="pf"
 NUM_CHUNKS=$1
+START_KEY="0"
 echo "Number of Chunks : $NUM_CHUNKS"
+
 shift
+
 TABLE_NAME="$1"
 TUPLES_PER_CHUNK=`expr $4 / $NUM_CHUNKS`
 echo "Number of tuples per chunk : $TUPLES_PER_CHUNK"
@@ -20,10 +23,10 @@ FILE_PATH="$DATA_FOLDER/$TABLE_NAME"
 DDL_FILE="$FILE_PATH.ddl"
 REL_FILE="$FILE_PATH.$REL_FORMAT"
 #TODO recompile the generator
-ORIGINAL_PATH="/home/alex/sparkmjoin/data/data.txt"
+ORIGINAL_PATH="/home_local/rivas/sparkmjoin/data/data.txt"
 
 #cloud 20
-EXEC_PATH="/home/alex/sparkmjoin/lib/generator"
+EXEC_PATH="/home_local/rivas/sparkmjoin/lib/generator"
 
 #name of the executable
 GENERATOR="generator.exe"
@@ -115,7 +118,8 @@ do
 CHUNK_FILE=$FILE_PATH'_'$CHUNK_ID'.json'
 
 #call generator data
-$EXEC_PATH/$GENERATOR $ATTRS
+NEW_ATTRS="$ATTRS $START_KEY"
+$EXEC_PATH/$GENERATOR $NEW_ATTRS
 #copy to the data set workspace
 
 cp $ORIGINAL_PATH $FILE_PATH'_'"$CHUNK_ID.$FILE_FORMAT"
@@ -126,6 +130,7 @@ generate_json_chunk $CHUNK_ID $CHUNK_FILE
 #append the chunk information to the pf master file
 append_chunk_to_pfFile $CHUNK_ID $CHUNK_FILE
 CHUNK_ID=`expr $CHUNK_ID + 1`
+START_KEY=`expr $START_KEY + $TUPLES_PER_CHUNK`
 done
 
 #append the schema info to the pf master file

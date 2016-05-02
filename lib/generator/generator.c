@@ -15,14 +15,14 @@ char cwd[1024];
 //char data_path[]="/home/renata/data";
 
 //cloud 20
-char data_path[]="/home/alex/sparkmjoin/data";
+char data_path[]="/home_local/rivas/sparkmjoin/data";
 
 char getRandomChar();
 char* getRandomString(int size);
 int computeStringSize(int numbers, int numLength, int string, int tupleSize);
 int* distribute(int columns, int howMany);
 
-void generateINT(const char *relname, int tuples, int columns, int min_value, int max_value, int isWithId);
+void generateINT(const char *relname, int tuples, int columns, int min_value, int max_value, int isWithId, int startKey);
 void generateFLOAT(const char *relname, int tuples, int columns, int min_value, int max_value, int isWithId);
 void generateSTRING(const char *relname, int tuples, int columns, int width, int isWithId);
 void generateSTRING2(const char *relname, int tuples, int columns, int tuple_width, int isWithId);
@@ -48,6 +48,7 @@ int main(int argc, char** argv)
 	int min_value;
 	int max_value;
 	int with_id; /* is first column tupleID (int) 1- true, 0 - false */
+	int start_key;
 
 	if(argc == 1)
 	{
@@ -59,7 +60,8 @@ int main(int argc, char** argv)
 		fprintf(stderr,"       <executable> <NAME> <0|1>(withID)	5 (MIX) 		<tuples> <columns> <floats>  <min> <max> [default: min = 0 max = 99999]\n");
 		exit(0);
 	}
-
+	
+ 	 fprintf(stdout, "Got: %d arguments \n", argc);
 
     if (getcwd(cwd, sizeof(cwd))!=NULL)
 	   fprintf(stdout, "Current working dir: %s\n", cwd);
@@ -70,7 +72,7 @@ int main(int argc, char** argv)
 	tuples = atoi(argv[4]);
 	columns = atoi(argv[5]);
 
-	if( (method == 0 || method == 1) && argc == 8 )
+	if( (method == 0 || method == 1) && argc >= 8 )
 	{
 		min_value = atoi(argv[6]);
 		max_value = atoi(argv[7]);
@@ -115,12 +117,20 @@ int main(int argc, char** argv)
 		min_value = atoi(argv[7]);
 		max_value = atoi(argv[8]);
 	}
+	
+	if( argc == 9)
+	{
+		start_key = atoi(argv[8]);
+		min_value = atoi(argv[6]);
+		max_value = atoi(argv[7]);
+	}else
+		start_key = 0;
 
 	switch(method)
 	{
 		case 0:
 			/* last parameter means whether we want first column to represent ID, 1=true*/
-			generateINT(relname, tuples, columns, min_value, max_value, with_id);
+			generateINT(relname, tuples, columns, min_value, max_value, with_id, start_key);
 			break;
 		case 1:
 			generateFLOAT(relname, tuples, columns, min_value, max_value, with_id);
@@ -150,7 +160,7 @@ int main(int argc, char** argv)
 }
 
 
-void generateINT(const char *relname, int tuples, int columns, int min_value, int max_value, int isWithId)
+void generateINT(const char *relname, int tuples, int columns, int min_value, int max_value, int isWithId, int startKey)
 {
 	FILE *fp;
 	char filename[256];
@@ -177,14 +187,15 @@ void generateINT(const char *relname, int tuples, int columns, int min_value, in
 	} 
 
 	srand((unsigned)time(0));
-	for(i = 0; i < tuples; i++)
+	int endKey = startKey + tuples;
+	for(i = startKey; i < endKey; i++)
 	{
 		for(j = 0; j < columns; j++)
 		{
-			if (j==0 && isWithId)
+			if ( j==0 && isWithId)
 				temp = i+1;  /* first tuple will be tuple ID */
-			else
-				temp = rand()%max_value;
+			else 
+			temp = rand()%max_value;
 
 			sprintf(buffer,"%d",temp);
 			estimated_size += (int)strlen(buffer);
