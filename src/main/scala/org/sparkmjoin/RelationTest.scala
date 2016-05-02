@@ -52,7 +52,7 @@ object RelationTest {
         ("spark.sql.IteratedHashJoin", "true")
       )
       val confsLong  : Map[String,Long] = Map(
-        ("spark.sql.files.maxPartitionBytes",512*1024*1024L),
+    //    ("spark.sql.files.maxPartitionBytes",512*1024*1024),
         ("spark.sql.shuffle.partitions",numPart)
       )
 
