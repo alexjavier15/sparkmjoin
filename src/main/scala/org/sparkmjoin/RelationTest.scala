@@ -38,7 +38,7 @@ object RelationTest {
 
 
 
-      val confs : Map[String,String] = Map(
+      val confsString : Map[String,String] = Map(
         ("spark.sql.codegen.wholeStageEnabled", "false"),
         ("spark.sql.codegen", "false"),
         ("spark.sql.codegen.WholeStage", "false"),
@@ -46,41 +46,41 @@ object RelationTest {
         ("spark.sql.mjoin.sampling",sampling),
         ("spark.sql.join.preferSortMergeJoin", "false"),
         ("spark.sql.autoBroadcastJoinThreshold", "1"),
-        ("spark.sql.shuffle.partitions",numPart),
+
+
         //("spark.sql.adaptive.shuffle.targetPostShuffleInputSize",(1024*1024*1024L).toString),
         ("spark.sql.IteratedHashJoin", "true")
       )
-
+      val confsLong  : Map[String,Long] = Map(
+        ("spark.sql.files.maxPartitionBytes",512*1024*1024L),
+        ("spark.sql.shuffle.partitions",numPart.asInstanceOf[Long])
+      )
 
 
      val conf = new SparkConf()
-        //.setMaster("spark://alex-HP:7077")
-        // val conf = new SparkConf().setMaster("local[*]")
-        //.        setSparkHome("/home/alex/spark1").
-        //  set("spark.default.parallelism","2").
-        //set("spark.cores.max","4").
-        //      set("spark.executor.instances", "3")
+
         .setAppName("TestMaster")
 
-    //  val sc = t2.sc
-
-      //   .setAppName("TestMaster").set("spark.driver.memory","512m")
-       // .set("spark.executor.memory","512m")
-        //.set("spark.default.parallelism","1")
       val sc = SparkContext.getOrCreate(conf)
 
       val sqlContext = new SQLContext(sc)
+      sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 512*1024*1024)
 
 
 
 
-      confs.foreach( conf =>
+
+      confsString.foreach( conf =>
       sqlContext.setConf(conf._1,conf._2)
 
       )
-      sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 1024*1024*1024)
-      sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
-      sqlContext.sparkContext.hadoopConfiguration.setInt("fs.inmemory.size.mb", 1024)
+      confsLong.foreach( conf =>
+        sqlContext.getConf(conf._1,conf._2.toString)
+
+      )
+
+      //sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
+      //sqlContext.sparkContext.hadoopConfiguration.setInt("fs.inmemory.size.mb", 1024)
       if(File("tmp.txt").exists)
         File("tmp.txt").delete()
 
