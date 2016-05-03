@@ -49,7 +49,9 @@ object RelationTest {
 
 
         //("spark.sql.adaptive.shuffle.targetPostShuffleInputSize",(1024*1024*1024L).toString),
-        ("spark.sql.IteratedHashJoin", "true")
+        ("spark.sql.IteratedHashJoin", "false"),
+        ("spark.sql.join.forceBroadcastJoin","true")
+
       )
       val confsLong  : Map[String,Long] = Map(
     //    ("spark.sql.files.maxPartitionBytes",512*1024*1024),
