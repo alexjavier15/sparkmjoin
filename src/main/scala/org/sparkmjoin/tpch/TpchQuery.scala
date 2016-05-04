@@ -10,7 +10,7 @@ def getQuery(queryPath: String , queryNum : String, variant: String): String ={
 
  val queryIter = fromFile(queryPath+"/"+queryNum+"_"+variant+".sql").getLines()
 
-   val query = queryIter.mkString
+   val query = queryIter.mkString(" ")
   println(query)
   query
 
