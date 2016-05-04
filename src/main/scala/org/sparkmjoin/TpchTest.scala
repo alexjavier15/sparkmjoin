@@ -11,7 +11,6 @@ import scala.reflect.io.File
   */
 object TpchTest {
 
-    var dataPath = ""
     def main(args: Array[String]) {
 
       val dataPath=args(0);
@@ -101,19 +100,19 @@ object TpchTest {
   def initRelations(dataPath: String, sqlContext : SQLContext ) : Unit ={
 
    TpchQuery.relations.foreach{
-     relName =>
-     loadRelationAs(relName,sqlContext)
+     name =>
+     loadRelationAs(dataPath+"/"+name,name,sqlContext)
 
    }
   }
 
 
-  def loadRelationAs(name : String, sqlContext : SQLContext): Unit = {
+  def loadRelationAs(path : String,name :String , sqlContext : SQLContext): Unit = {
 
     val relation = sqlContext.read
       .format("pf")
       .option("header", "false")
-      .load(dataPath+"/"+name+".pf")
+      .load(path+".pf")
 
     relation.registerTempTable(name)
   }
