@@ -21,8 +21,9 @@ object TpchTest {
       val query = args(2)
       val variant = args(3)
       val mjoin = args(4)
-      val sampling = args(5)
-      val numPart = args(6).toLong
+      val isExplain = args(5) == true
+      val sampling = args(6)
+      val numPart = args(7).toLong
       val t1  = new MyThread
       //al t2  = new SparkMaster
       try {
@@ -75,8 +76,11 @@ object TpchTest {
         val  start = System.currentTimeMillis()
 
         initRelations(dataPath,sqlContext)
+        if(isExplain)
+          sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).explain(true)
 
-        val iter = sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).show()
+        else
+        sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).show()
 
 
 
