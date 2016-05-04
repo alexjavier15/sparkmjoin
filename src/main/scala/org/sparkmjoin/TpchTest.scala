@@ -14,15 +14,16 @@ object TpchTest {
     var dataPath = ""
     def main(args: Array[String]) {
 
-      dataPath=args(0);
+      val dataPath=args(0);
+      val queryPath = args(1)
       //val data_size1 = args(1)
       //val data_size2 = args(2)
       //val data_size3 = args(3)
-      val query = args(1)
-      val variant = args(2)
-      val mjoin = args(3)
-      val sampling = args(4)
-      val numPart = args(5).toLong
+      val query = args(2)
+      val variant = args(3)
+      val mjoin = args(4)
+      val sampling = args(5)
+      val numPart = args(6).toLong
       val t1  = new MyThread
       //al t2  = new SparkMaster
       try {
@@ -76,7 +77,7 @@ object TpchTest {
 
         initRelations(dataPath,sqlContext)
 
-        val iter = sqlContext.sql(TpchQuery.getQuery(query,variant)).show()
+        val iter = sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).show()
 
 
 
