@@ -40,7 +40,7 @@ object TpchTest {
 
 
         val confsString : Map[String,String] = Map(
-          ("spark.sql.mjoin", mjoin),
+          ("spark.sql.mjoin", "true"),
           ("spark.sql.mjoin.sampling",sampling)
         )
         val confsLong  : Map[String,Long] = Map(
@@ -79,7 +79,6 @@ object TpchTest {
         initRelations(dataPath,sqlContext)
         if(isExplain)
           sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).explain(true)
-
         else
         sqlContext.sql(TpchQuery.getQuery(queryPath,query,variant)).show()
 
