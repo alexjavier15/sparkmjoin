@@ -8,7 +8,7 @@ val relations : Seq[String] = Seq("region","nation","part","supplier","customer"
 
 def getQuery(queryPath: String , queryNum : String, variant: String): String ={
 
- val queryIter = fromFile(queryPath+"/"+queryNum+"_"+variant).getLines()
+ val queryIter = fromFile(queryPath+"/"+queryNum+"_"+variant+".sql").getLines()
 
    queryIter.mkString
 
