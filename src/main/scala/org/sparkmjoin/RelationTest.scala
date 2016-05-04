@@ -39,22 +39,10 @@ object RelationTest {
 
 
       val confsString : Map[String,String] = Map(
-        ("spark.sql.codegen.wholeStageEnabled", "false"),
-        ("spark.sql.codegen", "false"),
-        ("spark.sql.codegen.WholeStage", "false"),
         ("spark.sql.mjoin", mjoin),
-        ("spark.sql.mjoin.sampling",sampling),
-        ("spark.sql.join.preferSortMergeJoin", "false"),
-        ("spark.sql.autoBroadcastJoinThreshold", "1"),
-
-
-        //("spark.sql.adaptive.shuffle.targetPostShuffleInputSize",(1024*1024*1024L).toString),
-        ("spark.sql.IteratedHashJoin", "false"),
-        ("spark.sql.join.forceBroadcastJoin","true")
-
+        ("spark.sql.mjoin.sampling",sampling)
       )
       val confsLong  : Map[String,Long] = Map(
-    //    ("spark.sql.files.maxPartitionBytes",512*1024*1024),
         ("spark.sql.shuffle.partitions",numPart)
       )
 
@@ -81,15 +69,11 @@ object RelationTest {
 
       )
 
-      //sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
-      //sqlContext.sparkContext.hadoopConfiguration.setInt("fs.inmemory.size.mb", 1024)
       if(File("tmp.txt").exists)
         File("tmp.txt").delete()
 
-      // Importing the SQL context gives access to all the SQL functions and implicit conversions.
-      import sqlContext.implicits._
       val  start = System.currentTimeMillis()
-      // val df = sc.parallelize((1 to 100).map(i => Record(i, s"val_$i"))).toDF()
+
       val dfC = sqlContext.read
         .format("pf")
         .option("header", "false")
@@ -106,7 +90,7 @@ object RelationTest {
       dfC.registerTempTable("C")
       dfD.registerTempTable("D")
       dfE.registerTempTable("E")
-      val iter = sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C.id = D1 AND D1 = E1").show()
+      val iter = sqlContext.sql("SELECT count(*) FROM E,D,C WHERE C.id = D1 AND D.id = E1").show()
 
 
 
