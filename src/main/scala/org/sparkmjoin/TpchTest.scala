@@ -21,7 +21,7 @@ object TpchTest {
       val query = args(2)
       val variant = args(3)
       val mjoin = args(4)
-      val isExplain = args(5) == true
+      val isExplain = args(5) == "true"
       val sampling = args(6)
       val numPart = args(7).toLong
       val t1  = new MyThread
