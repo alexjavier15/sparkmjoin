@@ -71,6 +71,7 @@ object TpchTest {
         )
 
         if(File("tmp.txt").exists)
+
           File("tmp.txt").delete()
 
         val  start = System.currentTimeMillis()
