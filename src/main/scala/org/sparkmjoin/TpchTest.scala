@@ -112,7 +112,7 @@ object TpchTest {
     val relation = sqlContext.read
       .format("pf")
       .option("header", "false")
-      .load(dataPath+name+".pf")
+      .load(dataPath+"/"+name+".pf")
 
     relation.registerTempTable(name)
   }
