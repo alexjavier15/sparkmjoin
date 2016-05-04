@@ -8,7 +8,7 @@ from
 	orders,
 	lineitem
 where
-	C_MKTSEGMENT = 'HOUSEHOLD'
+	C_MKTSEGMENT = HOUSEHOLD
 	and C_CUSTKEY = O_CUSTKEY
 	and L_ORDERKEY = O_ORDERKEY
 	and O_ORDERDATE < date '1995-03-10'
