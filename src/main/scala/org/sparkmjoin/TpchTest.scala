@@ -40,7 +40,7 @@ object TpchTest {
 
 
         val confsString : Map[String,String] = Map(
-          ("spark.sql.mjoin", true),
+          ("spark.sql.mjoin", mjoin),
           ("spark.sql.mjoin.sampling",sampling)
         )
         val confsLong  : Map[String,Long] = Map(
