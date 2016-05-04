@@ -36,4 +36,4 @@ group by
 order by
 	supp_nation,
 	cust_nation,
-	L_YEAR;
+	L_YEAR

@@ -29,4 +29,3 @@ group by
 	C_COMMENT
 order by
 	revenue desc
-limit 20;

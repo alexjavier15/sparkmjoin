@@ -12,7 +12,8 @@ def getQuery(queryPath: String , queryNum : String, variant: String): String ={
 
    val query = queryIter.mkString(" ")
   println(query)
-  query
+
+  query.replaceAll(";", "")
 
 }
 
