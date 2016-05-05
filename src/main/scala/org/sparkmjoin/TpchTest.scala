@@ -116,6 +116,7 @@ object TpchTest {
     val relation = sqlContext.read
       .format("pf")
       .option("header", "false")
+      .option("delimiter","|")
       .load(path+".pf")
 
     relation.registerTempTable(name)
