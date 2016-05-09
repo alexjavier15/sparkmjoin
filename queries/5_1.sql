@@ -17,8 +17,6 @@ where
 	and N_REGIONKEY = R_REGIONKEY
 	and R_NAME = 'MIDDLE EAST'
 	and O_ORDERDATE >= date '1996-01-01'
-	and O_ORDERDATE < date '1996-01-01' + interval '1 year'
+	and O_ORDERDATE < date '1996-01-01' + interval 1 year
 group by
 	N_NAME
-order by
-	revenue desc;
