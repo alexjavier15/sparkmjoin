@@ -2,13 +2,21 @@
 echo "$# parameters";  #- this prints number of parameters
 echo "$@"; # - this prints actual parameters
 
+#file propierties
+USERSPACE="user"
+PF_RELATION=$USERSPACE."relation"
+PF_CHUNK=$USERSPACE."chunkid"
 
-#cloud20
-DATA_FOLDER="/home_local/rivas/sparkmjoin/data/tpch_skew"
-SCHEMA_FOLDER="/home_local/rivas/sparkmjoin/data/tpch"
+#data location
+DATA_FOLDER="/home/alex/sparkmjoin/data/tpch_skew"
+SCHEMA_FOLDER="/home/alex/sparkmjoin/data/tpch"
 FILE_FORMAT="csv"
 REL_FORMAT="pf"
 NUM_CHUNKS=0
+
+if [ ! -d $DATA_FOLDER ]; then
+mkdir $DATA_FOLDER
+fi
 
 create_pfFile(){
 echo "$REL_FILE"
@@ -64,14 +72,18 @@ echo '}' >> $CHUNK_FILE
 
 for file in $DATA_FOLDER/*.json
 do
+if [ -f $file ] ;then
 echo "Removing $file"
 rm $file
+fi
 done
 
 for file in $DATA_FOLDER/*.$REL_FORMAT
 do
+if [ -f $file ] ;then
 echo "Removing $file"
 rm $file
+fi
 done
  
 for relation in $@
@@ -86,6 +98,11 @@ NUM_CHUNKS=0
 for chunk in $DATA_FOLDER/$relation"_"*
 do
 echo $chunk
+echo "setfattr -n $PF_RELATION -v $relation $chunk"
+`setfattr -n $PF_RELATION -v $relation $chunk`
+echo "setfattr -n $PF_CHUNK -v $NUM_CHUNKS $chunk"
+`setfattr -n $PF_CHUNK -v $NUM_CHUNKS $chunk`
+
 NUM_CHUNKS=`expr $NUM_CHUNKS + 1`
 done
 TOT_CHUNKS=$NUM_CHUNKS
@@ -100,7 +117,8 @@ create_pfFile
 until [ $CHUNK_ID -gt $NUM_CHUNKS ]
 do 
 
-CHUNK_FILE=$FILE_PATH'_'$CHUNK_ID'.json'
+CHUNK_ID2="$(printf "%02d" $CHUNK_ID )"
+CHUNK_FILE=$FILE_PATH'_'$CHUNK_ID2'.json'
 
 
 
