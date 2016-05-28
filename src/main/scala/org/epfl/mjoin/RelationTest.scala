@@ -1,4 +1,4 @@
-package org.sparkmjoin
+package org.epfl.mjoin
 
 import java.io.PrintStream
 import java.net.{ServerSocket, Socket}

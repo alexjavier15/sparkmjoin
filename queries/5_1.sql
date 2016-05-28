@@ -1,11 +1,11 @@
 select
-	N_NAME,
+	R_NAME,N_NAME,
 	sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) as revenue
 from
 	customer,
+	supplier,
 	orders,
 	lineitem,
-	supplier,
 	nation,
 	region
 where
@@ -15,8 +15,9 @@ where
 	and C_NATIONKEY = S_NATIONKEY
 	and S_NATIONKEY = N_NATIONKEY
 	and N_REGIONKEY = R_REGIONKEY
-	and R_NAME = 'MIDDLE EAST'
+	and R_NAME IN ('AMERICA', 'EUROPE')
 	and O_ORDERDATE >= date '1996-01-01'
 	and O_ORDERDATE < date '1996-01-01' + interval 1 year
 group by
-	N_NAME
+	R_NAME,N_NAME
+

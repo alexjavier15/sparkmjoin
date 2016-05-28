@@ -1,8 +1,8 @@
-package org.sparkmjoin
+package org.epfl.mjoin
 
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
-import org.sparkmjoin.tpch.TpchQuery
+import org.epfl.mjoin.tpch.TpchQuery
 
 import scala.reflect.io.File
 
@@ -55,8 +55,8 @@ object TpchTest {
         val sc = SparkContext.getOrCreate(conf)
 
         val sqlContext :SQLContext = new SQLContext(sc)
-        sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 1024*1024*1024)
-        sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
+        sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.block.size", 1024*1024*128)
+        sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*128)
 
 
 

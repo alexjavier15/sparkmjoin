@@ -1,4 +1,5 @@
-package org.sparkmjoin.tpch
+package org.epfl.mjoin.tpch
+
 import scala.io.Source.fromFile
 /**
   * Created by alex on 04.05.16.
