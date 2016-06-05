@@ -24,18 +24,8 @@ object TpchTest {
       val isExplain = args(5) == "true"
       val sampling = args(6)
       val numPart = args(7).toLong
-      val t1  = new MyThread
-      //al t2  = new SparkMaster
+ 
       try {
-        val server = (new Thread(t1))
-        // val spark_master = (new Thread(t2))
-        //spark_master.setDaemon(false)
-        //spark_master.start
-        server.setDaemon(false)
-        server.start
-
-        Thread.sleep(1000)
-
 
 
 
