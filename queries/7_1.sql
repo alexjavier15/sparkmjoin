@@ -8,7 +8,7 @@ from
 		select
 			n1.N_NAME as supp_nation,
 			n2.N_NAME as cust_nation,
-			extract(year from L_SHIPDATE) as L_YEAR,
+			year(L_SHIPDATE) as L_YEAR,
 			L_EXTENDEDPRICE * (1 - L_DISCOUNT) as volume
 		from
 			supplier,
@@ -33,7 +33,4 @@ group by
 	supp_nation,
 	cust_nation,
 	L_YEAR
-order by
-	supp_nation,
-	cust_nation,
-	L_YEAR
+

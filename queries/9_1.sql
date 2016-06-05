@@ -6,15 +6,15 @@ from
 	(
 		select
 			N_NAME as nation,
-			extract(year from O_ORDERDATE) as O_YEAR,
+			year(O_ORDERDATE) as O_YEAR,
 			L_EXTENDEDPRICE * (1 - L_DISCOUNT) - PS_SUPPLYCOST * L_QUANTITY as amount
 		from
-			part,
-			supplier,
-			lineitem,
 			partsupp,
+			lineitem,
+			supplier,
 			orders,
-			nation
+			nation,
+			part
 		where
 			S_SUPPKEY = L_SUPPKEY
 			and PS_SUPPKEY = L_SUPPKEY
@@ -27,6 +27,4 @@ from
 group by
 	nation,
 	O_YEAR
-order by
-	nation,
-	O_YEAR desc;
+
