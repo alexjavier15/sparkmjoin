@@ -1,5 +1,6 @@
 package org.epfl.mjoin
 
+import org.apache.log4j.{Level, LogManager}
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
 import org.epfl.mjoin.tpch.TpchQuery
@@ -66,6 +67,7 @@ object TpchTest {
           File("tmp.txt").delete()
 
         val  start = System.currentTimeMillis()
+	LogManager.getRootLogger.setLevel(Level.FATAL)
 
         initRelations(dataPath,sqlContext)
         if(isExplain)
