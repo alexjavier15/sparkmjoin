@@ -1,5 +1,7 @@
 package org.epfl.mjoin
 
+import java.io.FileWriter
+
 import org.apache.log4j.{Level, LogManager}
 import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkConf, SparkContext}
@@ -67,7 +69,7 @@ object TpchTest {
           File("tmp.txt").delete()
 
         val  start = System.currentTimeMillis()
-	LogManager.getRootLogger.setLevel(Level.FATAL)
+	      LogManager.getRootLogger.setLevel(Level.FATAL)
 
         initRelations(dataPath,sqlContext)
         if(isExplain)
@@ -80,13 +82,27 @@ object TpchTest {
         val end = System.currentTimeMillis()
         val duration = end-start
         println("*************Duration : "+ duration +"**************")
+
+
+        val fw = new FileWriter("/home_local/rivas/sparkmjoin/results.txt", true)
+        val mode = mjoin match{
+          case  "true" => "NORMAL"
+          case  _ => "OPTIMIZED"
+        }
+        val result = Seq[String](mode,query,variant,duration.toString).mkString(",")
+        fw.write(result)
+        fw.close()
+
+
       }
       catch {
         case e : Exception =>
           e.printStackTrace(System.err)
       }
       finally {
-        //   t1.stop = true
+
+
+
       }
 
 
