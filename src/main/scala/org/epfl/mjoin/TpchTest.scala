@@ -46,9 +46,9 @@ object TpchTest {
         val sc = SparkContext.getOrCreate(conf)
 
         val sqlContext :SQLContext = new SQLContext(sc)
-        sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.blocksize", 1024*1024*1024)
-	sqlContext.sparkContext.hadoopConfiguration.setInt("fs.swift.blocksize", 1024*1024*1024)
-        sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*1024)
+        sqlContext.sparkContext.hadoopConfiguration.setInt("dfs.blocksize", 1024*1024*64)
+	sqlContext.sparkContext.hadoopConfiguration.setInt("fs.swift.blocksize", 1024*1024*64)
+        sqlContext.sparkContext.hadoopConfiguration.setInt("fs.local.block.size", 1024*1024*64)
 
 
 
@@ -109,6 +109,7 @@ object TpchTest {
     val relation = sqlContext.read
       .format("pf")
       .option("header", "false")
+      .option("charset","UTF-8")
       .option("delimiter","|")
       .load(path+".pf")
 

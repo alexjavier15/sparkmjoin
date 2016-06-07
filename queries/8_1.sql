@@ -7,7 +7,7 @@ select
 from
 	(
 		select
-			extract(year from O_ORDERDATE) as O_YEAR,
+			year(O_ORDERDATE) as O_YEAR,
 			L_EXTENDEDPRICE * (1 - L_DISCOUNT) as volume,
 			n2.N_NAME as nation
 		from
@@ -30,6 +30,7 @@ from
 			and S_NATIONKEY = n2.N_NATIONKEY
 			and O_ORDERDATE between date '1995-01-01' and date '1996-12-31'
 			and P_TYPE = 'SMALL ANODIZED COPPER'
+			
 	) as all_nations
 group by
 	O_YEAR

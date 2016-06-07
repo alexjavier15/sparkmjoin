@@ -17,7 +17,7 @@ where
 	and N_REGIONKEY = R_REGIONKEY
 	and R_NAME = 'ASIA'
 	and O_ORDERDATE >= date '1997-01-01'
-	and O_ORDERDATE < date '1997-01-01' + interval 1 year
+	and O_ORDERDATE < date '1997-01-01' + interval 6 months
 group by
 	N_NAME
 

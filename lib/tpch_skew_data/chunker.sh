@@ -3,7 +3,7 @@ echo "$# parameters";  #- this prints number of parameters
 echo "$@"; # - this prints actual parameters
 CHUNK_SIZE=`expr $1 \* 1024 \* 1024`
 SO=".tbl"
-DEST_DIR="/home_local/rivas/sparkmjoin/data/tpch_skew"
+DEST_DIR="/home_local/rivas/sparkmjoin/data/tpch50"
 SUFFIX=".csv"
 NUM_CHUNKS=1
 shift

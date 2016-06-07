@@ -8,8 +8,8 @@ PF_RELATION=$USERSPACE."relation"
 PF_CHUNK=$USERSPACE."chunkid"
 
 #data location
-DATA_FOLDER="/home/alex/sparkmjoin/data/tpch_skew"
-SCHEMA_FOLDER="/home/alex/sparkmjoin/data/tpch"
+DATA_FOLDER="/home_local/rivas/sparkmjoin/data/tpch50"
+SCHEMA_FOLDER="/home_local/rivas/sparkmjoin/data/tpch"
 FILE_FORMAT="csv"
 REL_FORMAT="pf"
 NUM_CHUNKS=0
@@ -61,7 +61,7 @@ echo -n $'{\t"parent_file": ''"'$REL_FILE'",' > $CHUNK_FILE
 echo -n $'\n\t"chunk_id": '>> $CHUNK_FILE
 echo -n '"'$CHUNK_ID_FORAMATED'",'>> $CHUNK_FILE
 echo -n $'\n\t"chunk_size": 100000,\n\t"num_records": 50,\n\t"data_location": '  >> $CHUNK_FILE
-echo '"'"$FILE_PATH"'_'"$CHUNK_ID_SUFFIX.$FILE_FORMAT"'"' >> $CHUNK_FILE
+echo '"'"$FILE_DEST_PATH"'_'"$CHUNK_ID_SUFFIX.$FILE_FORMAT"'"' >> $CHUNK_FILE
 echo '}' >> $CHUNK_FILE
 
 }
@@ -119,7 +119,7 @@ do
 
 CHUNK_ID2="$(printf "%02d" $CHUNK_ID )"
 CHUNK_FILE=$FILE_PATH'_'$CHUNK_ID2'.json'
-
+FILE_DEST_PATH="swift://"$TABLE_NAME".pelican/"$TABLE_NAME
 
 
 #Generate a file json file representing the chunk

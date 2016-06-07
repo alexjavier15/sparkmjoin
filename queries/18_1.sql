@@ -8,17 +8,18 @@ select
 from
 	customer,
 	orders,
-	lineitem
-where
-	O_ORDERKEY in (
+	lineitem,
+	(
 		select
-			L_ORDERKEY
+			L_ORDERKEY as LO1
 		from
 			lineitem
 		group by
 			L_ORDERKEY having
 				sum(L_QUANTITY) > 313
-	)
+	) SUM1
+where
+	O_ORDERKEY = LO1
 	and C_CUSTKEY = O_CUSTKEY
 	and O_ORDERKEY = L_ORDERKEY
 group by

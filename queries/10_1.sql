@@ -16,7 +16,7 @@ where
 	C_CUSTKEY = O_CUSTKEY
 	and L_ORDERKEY = O_ORDERKEY
 	and O_ORDERDATE >= date '1993-09-01'
-	and O_ORDERDATE < date '1993-09-01' + interval '3 months'
+	and O_ORDERDATE < date '1993-09-01' + interval 3 months
 	and L_RETURNFLAG = 'R'
 	and C_NATIONKEY = N_NATIONKEY
 group by

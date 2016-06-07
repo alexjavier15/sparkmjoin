@@ -3,9 +3,9 @@ select
 	sum(L_EXTENDEDPRICE * (1 - L_DISCOUNT)) as revenue
 from
 	customer,
-	supplier,
 	orders,
 	lineitem,
+	supplier,
 	nation,
 	region
 where
@@ -20,4 +20,6 @@ where
 	and O_ORDERDATE < date '1996-01-01' + interval 1 year
 group by
 	R_NAME
+order by
+	revenue desc;
 

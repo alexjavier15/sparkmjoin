@@ -37,4 +37,3 @@ group by
 order by
 	numwait desc,
 	S_NAME
-limit 100;
