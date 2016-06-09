@@ -86,11 +86,12 @@ object TpchTest {
 
         val fw = new FileWriter("/home_local/rivas/sparkmjoin/results.txt", true)
         val mode = mjoin match{
-          case  "true" => "NORMAL"
-          case  _ => "OPTIMIZED"
+          case  "true" => "OPTIMIZED"
+          case  _ => "NORMAL"
         }
         val result = Seq[String](mode,query,variant,duration.toString).mkString(",")
         fw.write(result)
+	fw.write(sys.props("line.separator"))
         fw.close()
 
 

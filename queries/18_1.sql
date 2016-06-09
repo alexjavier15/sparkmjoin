@@ -11,7 +11,7 @@ from
 	lineitem,
 	(
 		select
-			L_ORDERKEY as LO1
+			L_ORDERKEY as L_ORDERKEY1
 		from
 			lineitem
 		group by
@@ -19,7 +19,7 @@ from
 				sum(L_QUANTITY) > 313
 	) SUM1
 where
-	O_ORDERKEY = LO1
+	O_ORDERKEY = L_ORDERKEY1
 	and C_CUSTKEY = O_CUSTKEY
 	and O_ORDERKEY = L_ORDERKEY
 group by
